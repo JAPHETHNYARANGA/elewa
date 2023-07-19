@@ -1,15 +1,15 @@
 <template>
-  <Navbar/>
+  <FeedPage/>
 </template>
 
 <script>
 
-import Navbar from './components/NavigationBar.vue'
+import FeedPage from './Pages/FeedPage.vue'
 
 export default {
   name: 'App',
   components: {
-    Navbar
+    FeedPage
   }
 }
 </script>
