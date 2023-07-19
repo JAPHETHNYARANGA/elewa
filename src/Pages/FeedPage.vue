@@ -1,4 +1,8 @@
 <template>
+    <div class="container">
+        <topNavbar></topNavbar>
+    </div>
+    
 
 
 </template>
