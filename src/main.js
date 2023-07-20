@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import 'bootstrap'; // Import Bootstrap JavaScript bundle
 import LoginModal from './components/LoginModal.vue';
 
+
 const app = createApp(App); // Create the Vue application instance
 
 app.component('topNavbar', NavigationBar);
