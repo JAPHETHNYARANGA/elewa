@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import store from '../store'
+import router from './router/router';
 import NavigationBar from './components/NavigationBar.vue';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import 'bootstrap'; // Import Bootstrap JavaScript bundle
@@ -12,5 +13,6 @@ app.component('topNavbar', NavigationBar);
 app.component('loginModal', LoginModal);
 
 app.use(store);
+app.use(router); 
 
 app.mount('#app'); // Mount the app to the DOM

@@ -1,18 +1,22 @@
 <template>
-  <FeedPage/>
+ 
+  <NavigationBar />
+  <router-view/>
+
 
 </template>
 
 <script>
 
-import FeedPage from './Pages/FeedPage.vue'
 
+import NavigationBar from './components/NavigationBar.vue';
 
 export default {
   name: 'App',
   components: {
-    FeedPage
-  }
+   
+    NavigationBar
+}
 }
 </script>
 

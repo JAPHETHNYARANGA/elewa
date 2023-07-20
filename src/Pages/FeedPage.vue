@@ -19,6 +19,16 @@
 
                         <p class="card-text">{{ post.body }}</p>
 
+                        <p class="card-text">Posted by: {{ post.ownerName }}</p> 
+                        <div class="row">
+                            <div class="col">
+                                <a href="#" class="btn btn-primary">Comments</a>
+                            </div>
+                            <div class="col">
+                                <a href="#" class="btn btn-primary">Message</a>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -35,42 +45,65 @@
 import axios from 'axios';
 
 export default {
-    name: 'PostsList',
-    data() {
-        return {
-            posts: [],
-            searchQuery: '', // Add a searchQuery property to store the search query
-        };
+  name: 'PostsList',
+  data() {
+    return {
+      posts: [],
+      users: [], // Add a property to store user data
+      searchQuery: '', // Add a searchQuery property to store the search query
+    };
+  },
+  async mounted() {
+    await this.fetchPosts();
+    await this.fetchUsers(); // Fetch user data
+    this.matchPostsToUsers(); // Match posts to their owners
+  },
+  methods: {
+    async fetchPosts() {
+      // Fetch all posts
+      const apiUrl = 'https://jsonplaceholder.typicode.com/posts';
+      try {
+        const response = await axios.get(apiUrl);
+        this.posts = response.data;
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      }
     },
-    mounted() {
-        this.fetchPosts();
+    async fetchUsers() {
+      // Fetch all users
+      const apiUrl = 'https://jsonplaceholder.typicode.com/users';
+      try {
+        const response = await axios.get(apiUrl);
+        this.users = response.data;
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
     },
-    methods: {
-        fetchPosts() {
-            // Fetch all posts
-            const apiUrl = 'https://jsonplaceholder.typicode.com/posts';
-            axios
-                .get(apiUrl)
-                .then(response => {
-                    this.posts = response.data;
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                });
-        },
-        performSearch(searchQuery) {
-            // Filter posts based on the search query
-            this.searchQuery = searchQuery;
-        },
+    matchPostsToUsers() {
+      // Match each post to its owner using the userId property
+      this.posts.forEach(post => {
+        const user = this.users.find(user => user.id === post.userId);
+        if (user) {
+          post.ownerName = user.name; // Add an ownerName property to each post
+        }
+      });
     },
-    computed: {
-        filteredPosts() {
-            // Filter posts based on the search query
-            return this.posts.filter(post => post.title.toLowerCase().includes(this.searchQuery.toLowerCase()));
-        },
+    performSearch(searchQuery) {
+      // Filter posts based on the search query
+      this.searchQuery = searchQuery;
     },
+  },
+  computed: {
+    filteredPosts() {
+      // Filter posts based on the search query
+      return this.posts.filter(post =>
+        post.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    },
+  },
 };
 </script>
+
 
 <style scoped>
 
