@@ -15,8 +15,7 @@
                                     <div class="d-flex flex-row align-items-center">
                                         <img src="https://i.imgur.com/UXdKE3o.jpg" width="50" class="rounded-circle">
                                         <div class="d-flex flex-column ml-2"> <span class="font-weight-bold">{{
-                                            post.ownerName }}</span> <small class="text-primary">{{ post.title
-    }}</small>
+                                            post.ownerName }}</span> <small class="text-primary">{{ post.title}}</small>
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row mt-1 ellipsis"> <small class="mr-2">20 mins</small> <i
@@ -96,11 +95,7 @@ export default {
             searchQuery: '', // Add a searchQuery property to store the search query
         };
     },
-    // async mounted() {
-    //     await this.fetchPosts();
-    //     await this.fetchUsers(); // Fetch user data
-    //     this.matchPostsToUsers(); // Match posts to their owners
-    // },
+
     async mounted() {
         try {
             if (this.posts.length === 0) {
@@ -209,29 +204,20 @@ img:hover {
 
 .follow-icon {
     position: relative;
-    /* Set the container to relative positioning */
 }
 
 .follow-text {
     position: absolute;
-    /* Set the Follow text to absolute positioning */
     top: 0;
-    /* Position it at the top of the container */
     left: 0;
-    /* Position it at the left of the container */
     display: none;
-    /* Hide it by default */
     background-color: #ffffff;
-    /* Set the background color */
     padding: 2px 5px;
-    /* Add padding to the text */
     border-radius: 3px;
-    /* Add some border radius for styling */
 }
 
 .follow-icon:hover .follow-text {
     display: block;
-    /* Show the Follow text on hover */
 }
 
 
