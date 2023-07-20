@@ -20,7 +20,8 @@
                                     <div class="d-flex flex-row align-items-center">
                                         <img src="https://i.imgur.com/UXdKE3o.jpg" width="50" class="rounded-circle">
                                         <div class="d-flex flex-column ml-2"> <span class="font-weight-bold">{{
-                                            post.ownerName }}</span> <small class="text-primary">{{ post.title}}</small>
+                                            post.ownerName }}</span> <small class="text-primary">{{ post.title
+    }}</small>
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row mt-1 ellipsis"> <small class="mr-2">20 mins</small> <i
@@ -39,9 +40,8 @@
                                     <div class="row">
                                         <div class="col">
                                             <!-- Pass the message "Login to like" to the handleLike function -->
-                                            <img @click="handleLike(post, 'Login to like')"
-                                                :src="post.likes > 0 ? '/liked.png' : '/like.png'" alt="like">
-                                            <span>{{ post.likes }} Likes</span>
+                                            <img @click="handleLike(post)" :src="'/like.png'" alt="like">
+                                            <span>{{ post.likes }} </span>
                                         </div>
 
                                         <div class="col">
@@ -134,7 +134,7 @@ export default {
 
     methods: {
         ...mapMutations(['incrementLikes']),
-        ...mapActions(['likePost', 'unlikePost']),
+        ...mapActions(['likePost']),
 
         toggleAlert(message) {
             alert(message); // Use Vue's alert function to show the alert message
@@ -148,20 +148,19 @@ export default {
                 if (post.likes > 0) {
                     // Unlike the post
                     const success = await this.likePost(post.id);
-                    if (!success) {
+                    if (success) {
+                        this.toggleAlert('Post liked successfully.');
+                    } else {
                         // Handle failure (optional)
+                        console.log("Failed to like the post.");
                     }
-                } else {
-                    // Like the post
-                    const success = await this.unlikePost(post.id);
-                    if (!success) {
-                        // Handle failure (optional)
-                    }
-                }
+                } 
+               
             } catch (error) {
                 console.error('Error liking/unliking the post:', error);
             }
         },
+ 
         async fetchPosts() {
             // Fetch all posts
             const apiUrl = 'https://jsonplaceholder.typicode.com/posts';
@@ -252,12 +251,12 @@ export default {
                 // Post is already blocked, unblock it
                 this.unblockPost(postId);
                 this.toggleAlert('Post unblocked successfully.');
-               
+
             } else {
                 // Block the post
                 this.blockPost(postId);
                 this.toggleAlert('Post blocked successfully.');
-                window.location.reload(); 
+                window.location.reload();
             }
         },
 

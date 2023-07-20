@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@paypal/checkout-server-sdk": "^1.0.3",
     "axios": "^1.4.0",
     "bootstrap": "^5.3.0",
     "core-js": "^3.8.3",

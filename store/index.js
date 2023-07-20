@@ -87,39 +87,25 @@ const store = createStore({
         },
     },
     actions: {
-        async likePost({ commit, state }, postId) {
+        async likePost({ commit }, postId) {
             try {
-                // Perform the API request to like the post (if your API supports it)
-                // For this example, we'll just increment the post's likes in Vuex and localStorage
-                const post = state.posts.find((p) => p.id === postId);
-                if (post) {
-                    const newLikes = post.likes + 1;
-                    // Update the post's likes in the store and localStorage
-                    commit('updateLikes', { postId, newLikes });
-                }
-                return true; // Return true indicating success
+              // Perform the API request to like the post
+              const response = await axios.post(`https://your-api-url.com/posts/${postId}/like`);
+        
+              // Assuming the API returns the updated post data, you can update the likes count in Vuex
+              const updatedPost = response.data;
+              commit('updateLikes', { postId, newLikes: updatedPost.likes });
+        
+              console.log('Post liked successfully.');
+              return true; // Return true indicating success
             } catch (error) {
-                console.error('Error liking the post:', error);
-                return false; // Return false indicating failure
+              console.error('Error liking the post:', error);
+              return false; // Return false indicating failure
             }
-        },
-
-        async unlikePost({ commit, state }, postId) {
-            try {
-                // Perform the API request to unlike the post (if your API supports it)
-                // For this example, we'll just decrement the post's likes in Vuex and localStorage
-                const post = state.posts.find((p) => p.id === postId);
-                if (post) {
-                    const newLikes = post.likes - 1;
-                    // Update the post's likes in the store and localStorage
-                    commit('updateLikes', { postId, newLikes });
-                }
-                return true; // Return true indicating success
-            } catch (error) {
-                console.error('Error unliking the post:', error);
-                return false; // Return false indicating failure
-            }
-        },
+          },
+        
+        
+    
 
         // Action to fetch posts and comments from API and store them in Vuex
         async fetchPostsAndComments({ commit, state }) {
