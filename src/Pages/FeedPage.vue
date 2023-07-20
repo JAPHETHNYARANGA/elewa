@@ -36,9 +36,10 @@
 
                                     <div class="row">
                                         <div class="col">
-                                            <img src="/like.png" alt="follow">
-
+                                            <img @click="incrementLikes(post.id)" src="/like.png" alt="follow">
+                                            <span>{{ post.likes }} Likes</span>
                                         </div>
+
                                         <div class="col">
                                             <img @click="toggleComments(post)" src="/comment.png" alt="follow">
 
@@ -83,6 +84,7 @@
 
 <script>
 import axios from 'axios';
+import { mapMutations } from 'vuex';
 
 export default {
     name: 'PostsList',
@@ -106,9 +108,13 @@ export default {
         await Promise.all([fetchPostsPromise, fetchUsersPromise]);
 
         this.matchPostsToUsers(); // Match posts to their owners
+
+        // Fetch posts and comments using the Vuex action
+        await this.$store.dispatch('fetchPostsAndComments');
     },
 
     methods: {
+        ...mapMutations(['incrementLikes']),
         async fetchPosts() {
             // Fetch all posts
             const apiUrl = 'https://jsonplaceholder.typicode.com/posts';
@@ -179,6 +185,7 @@ export default {
             );
         },
     },
+    
 };
 </script>
 
