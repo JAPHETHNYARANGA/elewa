@@ -10,7 +10,7 @@
                 <div class="container mt-5 mb-5">
                     <div class="row d-flex align-items-center justify-content-center">
                         <div class="col-md-6">
-                            <div class="card">
+                            <div class="card ">
                                 <div class="d-flex justify-content-between p-2 px-3">
                                     <div class="d-flex flex-row align-items-center">
                                         <img src="https://i.imgur.com/UXdKE3o.jpg" width="50" class="rounded-circle">
@@ -39,6 +39,7 @@
                                             <img @click="incrementLikes(post.id)" src="/like.png" alt="follow">
                                             <span>{{ post.likes }} Likes</span>
                                         </div>
+
 
                                         <div class="col">
                                             <img @click="toggleComments(post)" src="/comment.png" alt="follow">
@@ -84,7 +85,7 @@
 
 <script>
 import axios from 'axios';
-import { mapMutations } from 'vuex';
+import { mapMutations, mapState } from 'vuex';
 
 export default {
     name: 'PostsList',
@@ -101,16 +102,21 @@ export default {
     //     this.matchPostsToUsers(); // Match posts to their owners
     // },
     async mounted() {
-        const fetchPostsPromise = this.fetchPosts();
-        const fetchUsersPromise = this.fetchUsers();
-
-        // Wait for both fetchPosts and fetchUsers to complete concurrently
-        await Promise.all([fetchPostsPromise, fetchUsersPromise]);
-
-        this.matchPostsToUsers(); // Match posts to their owners
-
-        // Fetch posts and comments using the Vuex action
-        await this.$store.dispatch('fetchPostsAndComments');
+        try {
+            if (this.posts.length === 0) {
+                // If posts data is not available in Vuex store, fetch it from the API and update the store
+                await this.fetchPosts();
+                await this.fetchUsers(); // Fetch user data
+                this.matchPostsToUsers(); // Match posts to their owners
+            } else {
+                // If posts data is available in Vuex store, no need to fetch from the API
+                this.matchPostsToUsers(); // Match posts to their owners
+            }
+            // Fetch posts and comments using the Vuex action
+            await this.$store.dispatch('fetchPostsAndComments');
+        } catch (error) {
+            console.error('Error fetching posts and comments:', error);
+        }
     },
 
     methods: {
@@ -178,6 +184,7 @@ export default {
         },
     },
     computed: {
+        ...mapState(['posts']),
         filteredPosts() {
             // Filter posts based on the search query
             return this.posts.filter((post) =>
@@ -185,7 +192,7 @@ export default {
             );
         },
     },
-    
+
 };
 </script>
 

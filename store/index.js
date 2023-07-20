@@ -5,7 +5,7 @@ const store = createStore({
     state: {
         user: JSON.parse(localStorage.getItem('user')) || null,
         followingUsers: [], // Initialize an array to store the users you are following
-        posts: [], // Initialize an array to store the posts
+        posts: JSON.parse(localStorage.getItem('posts')) || [], // Initialize an array to store the posts
         comments: {}, // Initialize an object to store comments (use post ID as keys)
     },
     mutations: {
@@ -26,9 +26,9 @@ const store = createStore({
         setComments(state, { postId, comments }) {
             state.comments[postId] = comments;
         },
-        // Mutation to increment likes for a post
         setPosts(state, posts) {
-            state.posts = posts.map(post => ({ ...post, likes: 0 })); // Initialize the likes property to 0
+            state.posts = posts.map(post => ({ ...post, likes: 0 }));
+            localStorage.setItem('posts', JSON.stringify(state.posts)); // Save posts data to local storage
         },
         // ...
         // Mutation to increment likes for a post
@@ -43,24 +43,27 @@ const store = createStore({
         // Your other action functions go here
 
         // Action to fetch posts and comments from API and store them in Vuex
-        async fetchPostsAndComments({ commit }) {
+        async fetchPostsAndComments({ commit, state }) {
             try {
+              if (!state.posts || state.posts.length === 0) {
+                // If posts data is not available in Vuex store or is empty, fetch it from the API
                 const postsResponse = await axios.get('https://jsonplaceholder.typicode.com/posts');
                 const posts = postsResponse.data;
                 commit('setPosts', posts);
-
-                // Fetch comments for each post concurrently and add them to the comments object
-                const fetchCommentsPromises = posts.map(post => axios.get(`https://jsonplaceholder.typicode.com/comments?postId=${post.id}`));
-                const commentsResponses = await Promise.all(fetchCommentsPromises);
-                commentsResponses.forEach((response, index) => {
-                    const postId = posts[index].id;
-                    const comments = response.data;
-                    commit('setComments', { postId, comments });
-                });
+              }
+        
+              // Fetch comments for each post concurrently and add them to the comments object
+              const fetchCommentsPromises = state.posts.map(post => axios.get(`https://jsonplaceholder.typicode.com/comments?postId=${post.id}`));
+              const commentsResponses = await Promise.all(fetchCommentsPromises);
+              commentsResponses.forEach((response, index) => {
+                const postId = state.posts[index].id;
+                const comments = response.data;
+                commit('setComments', { postId, comments });
+              });
             } catch (error) {
-                console.error('Error fetching posts and comments:', error);
+              console.error('Error fetching posts and comments:', error);
             }
-        },
+          },
         // Action to initialize followingUsers array from localStorage
         initFollowingUsers({ commit }) {
             commit('initializeFollowingUsers');

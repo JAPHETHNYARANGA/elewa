@@ -1,35 +1,5 @@
 <template>
  
-
-    <!-- Modal
-    <div tabindex="-1" aria-labelledby="exampleModalLabel" >
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form @submit.prevent="login">
-                        <div class="form-group mt-5">
-                            <label for="username">UserName</label>
-                            <input v-model="username" type="text" class="form-control" id="username"
-                                placeholder="Enter Username">
-                        </div>
-                        <div class="form-group mt-5">
-                            <label for="zipcode">Zip Code</label>
-                            <input v-model="zipcode" type="password" class="form-control" id="zipcode"
-                                placeholder="Zip Code">
-                        </div>
-                        <button type="submit" class="btn btn-primary mt-5 w-100">Login</button>
-                    </form>
-                </div>
-              
-            </div>
-        </div>
-    </div> -->
-
-
     <section class="vh-100" style="background-color: whitesmoke">
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">

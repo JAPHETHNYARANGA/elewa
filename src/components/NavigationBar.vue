@@ -20,10 +20,16 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
+                        <router-link to="users" @click="checkLoginStatus">
+                            <a class="nav-link" href="#">Users</a>
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
                         <router-link to="following" @click="checkLoginStatus">
                             <a class="nav-link" href="#">Following</a>
                         </router-link>
                     </li>
+                   
                     <li class="nav-item">
                         <a class="nav-link ">Subscribe</a>
                     </li>

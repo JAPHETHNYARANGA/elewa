@@ -4,6 +4,7 @@ import LoginModalVue from "@/components/LoginModal.vue";
 import MyFeedsComponent from "@/Pages/MyFeeds.vue";
 import ProfilePage from "@/Pages/ProfilePage.vue";
 import FollowingPage from "@/Pages/FollowingPage.vue";
+import UsersPageVue from "@/Pages/UsersPage.vue";
 
 const routes  = [
     {
@@ -30,6 +31,11 @@ const routes  = [
       path:'/following',
       name:'Following ',
       component: FollowingPage 
+    },
+    {
+      path:'/users',
+      name:'users',
+      component:UsersPageVue
     }
    
    

@@ -2,7 +2,7 @@
     <div class="container mt-5">
         <div class="row mt-5" v-if="posts.length">
             <div class="col-md-4 col-sm-12" style="padding-top: 80px;" v-for="post in posts" :key="post.id">
-                <div class="card shadow-lg p-3 mb-5 bg-white rounded border-0">
+                <div class="card h-100 shadow-lg p-3 mb-5 bg-white rounded border-0">
                     <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/041.webp" class="card-img-top"
                                 alt="Hollywood Sign on The Hill" />
                     <div class="card-body">
