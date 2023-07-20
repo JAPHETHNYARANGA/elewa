@@ -37,17 +37,11 @@
   import axios from 'axios';
   
   export default {
-    data() {
-      return {
-        users: [], // Initialize an empty array to store the fetched users
-        successMessage: '', // Initialize an empty string to store the success message
-      };
-    },
     async mounted() {
       try {
         // Fetch all users from the API using axios
         const response = await axios.get('https://jsonplaceholder.typicode.com/users');
-        this.users = response.data;
+        this.$store.commit('setUsers', response.data);
       } catch (error) {
         console.error('Error fetching users:', error);
       }
@@ -56,9 +50,11 @@
       async followUser(user) {
         // Add or remove the user from followingUsers array in Vuex store
         if (this.isFollowing(user)) {
+          // Dispatch the unfollowUser action to remove the user
           this.$store.commit('unfollowUser', user);
           this.successMessage = `You have unfollowed ${user.name}.`;
         } else {
+          // Dispatch the followUser action to add the user
           this.$store.commit('followUser', user);
           this.successMessage = `You are now following ${user.name}.`;
         }
@@ -69,6 +65,11 @@
       },
       isFollowing(user) {
         return this.$store.state.followingUsers.some(u => u.id === user.id);
+      },
+    },
+    computed: {
+      users() {
+        return this.$store.state.users;
       },
     },
   };
