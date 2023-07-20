@@ -1,10 +1,12 @@
 <template>
   <FeedPage/>
+
 </template>
 
 <script>
 
 import FeedPage from './Pages/FeedPage.vue'
+
 
 export default {
   name: 'App',

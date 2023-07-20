@@ -15,9 +15,8 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">My Feeds</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Login</a>
-                    </li>
+                    
+               
                     <li class="nav-item">
                         <a class="nav-link ">Subscribe</a>
                     </li>
@@ -25,9 +24,14 @@
 
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">UserName</a>
+                        {{ $store.state.user.name }}
                     </li>
 
+                </ul>
+                <ul class="navbar-nav ">
+                    <li class="nav-item">
+                        <a class="nav-link ">Login</a>
+                    </li>
                 </ul>
                 <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
@@ -35,8 +39,11 @@
 
                 </form>
             </div>
+
         </div>
     </nav>
+
+  
 </template>
   
 
