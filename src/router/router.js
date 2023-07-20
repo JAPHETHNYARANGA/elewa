@@ -3,7 +3,7 @@ import FeedPageVue from "@/Pages/FeedPage.vue";
 import LoginModalVue from "@/components/LoginModal.vue";
 import MyFeedsComponent from "@/Pages/MyFeeds.vue";
 import ProfilePage from "@/Pages/ProfilePage.vue";
-import Following from "@/Pages/Following.vue";
+import FollowingPage from "@/Pages/FollowingPage.vue";
 
 const routes  = [
     {
@@ -29,7 +29,7 @@ const routes  = [
     {
       path:'/following',
       name:'Following ',
-      component: Following 
+      component: FollowingPage 
     }
    
    
