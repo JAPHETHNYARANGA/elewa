@@ -31,7 +31,10 @@
                     </li>
                    
                     <li class="nav-item">
-                        <a class="nav-link ">Subscribe</a>
+                        <router-link to ="subscribe" @Click = "checkLoginStatus">
+                            <a class="nav-link ">Subscribe</a>
+                        </router-link>
+                        
                     </li>
                 </ul>
 
