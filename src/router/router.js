@@ -6,6 +6,7 @@ import ProfilePage from "@/Pages/ProfilePage.vue";
 import FollowingPage from "@/Pages/FollowingPage.vue";
 import UsersPageVue from "@/Pages/UsersPage.vue";
 import SubscribePage from '@/Pages/SubscribePage.vue';
+import MessagesPage from '@/Pages/MessagesPage.vue';
 
 const routes  = [
     {
@@ -42,6 +43,11 @@ const routes  = [
       path:'/subscribe',
       name:'subscribe',
       component: SubscribePage
+    },
+    {
+      path:'/messages',
+      name:'messages',
+      component: MessagesPage
     }
    
    

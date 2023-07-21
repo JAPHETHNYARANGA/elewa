@@ -11,7 +11,7 @@
   
    
    
-<script>
+<script scoped>
 import { loadScript } from '@paypal/paypal-js';
 
 export default {
@@ -31,27 +31,21 @@ export default {
             paid: false,
         };
     },
-    props: {
-        cartTotal: {
-            type: Number,
-            default: 0.01,
-        },
-    },
+ 
     methods: {
         createOrder: function (data, actions) {
-            console.log('Creating order...');
             return actions.order.create({
                 purchase_units: [
                     {
                         amount: {
-                            value: this.cartTotal,
+                            value: 10,
+                            currency_code: 'EUR',
                         },
                     },
                 ],
             });
         },
         onApprove: function (data, actions) {
-            console.log('Order approved...');
             return actions.order.capture().then(() => {
                 this.paid = true;
                 console.log('Order complete!');
@@ -59,11 +53,12 @@ export default {
         },
     },
 };
-const CLIENT_ID = 'test';
+//client id for my application
+const CLIENT_ID = 'AaEFQKdaRSh9oanzcYQZkiFGdwLbvLuKNeH-eNW2G7o_xJ2CHGFjeS9jr9C1HTbFEXFkS7E3omlx0rT-';
 </script>
   
 
-<style>
+<style scoped>
 html, body {
   height: 100%;
   margin: 0;

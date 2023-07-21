@@ -34,7 +34,12 @@
                         <router-link to ="subscribe" @Click = "checkLoginStatus">
                             <a class="nav-link ">Subscribe</a>
                         </router-link>
-                        
+                    </li>
+
+                    <li class="nav-item">
+                        <router-link to ="messages" @Click = "checkLoginStatus">
+                            <a class="nav-link ">Chats</a>
+                        </router-link>
                     </li>
                 </ul>
 
