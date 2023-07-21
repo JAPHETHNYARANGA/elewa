@@ -19,6 +19,20 @@ npm run build
 ```
 npm run lint
 ```
+## Dependencies
+* Vue3
+* Bootstrap5
+* PayPal js package
+* Vuex 
+* Vue router
+* Axios
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+## About
+The project is a simple frontend application, that fetches an api and uses Vuex to manage its state to enable it perform most of its functions.
+
+## Screen Shots
+
+
+
