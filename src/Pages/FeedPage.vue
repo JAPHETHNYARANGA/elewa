@@ -101,6 +101,7 @@ export default {
             posts: [],
             users: [], // Add a property to store user data
             searchQuery: '',
+            showAlert: true,
 
         };
     },
@@ -123,9 +124,15 @@ export default {
             // Filter out blocked posts for the logged-in user
             const blockedPostIds = this.$store.state.blockedPosts;
             this.posts = this.posts.filter((post) => !blockedPostIds.includes(post.id));
+
+            window.addEventListener('scroll', this.trackPostsViewed);
         } catch (error) {
             console.error('Error fetching posts and comments:', error);
         }
+
+    },
+    beforeUnmount() {
+        window.removeEventListener('scroll', this.trackPostsViewed);
     },
 
     methods: {
@@ -291,6 +298,25 @@ export default {
             this.$store.commit('unblockPost', postId);
         },
 
+        trackPostsViewed() {
+            try {
+                const totalHeight = document.documentElement.scrollHeight;
+                const visibleHeight = window.innerHeight;
+                const scrollPosition = window.scrollY;
+                const scrolledHeight = scrollPosition + visibleHeight;
+
+                if (scrolledHeight >= totalHeight && this.$store.state.viewedPostsCount >= 20) {
+                    this.toggleAlert('Subscribe to view more posts');
+                    this.showAlert = false; // Hide the alert after displaying it
+                }
+                // Increment the viewedPostsCount in the Vuex store
+                this.$store.commit('incrementViewedPostsCount', 1);
+
+            } catch (error) {
+                console.error('Error fetching viewed post count:', error);
+            }
+
+        },
     },
     computed: {
         ...mapState(['posts']),
