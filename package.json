@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "deploy": "npm run build && gh-pages -d dist"
+    "deploy": "npm run build && homePage -d dist"
   },
   "dependencies": {
     "@paypal/checkout-server-sdk": "^1.0.3",
