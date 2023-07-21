@@ -40,8 +40,7 @@
                                     <div class="row">
                                         <div class="col">
                                             <!-- Pass the message "Login to like" to the handleLike function -->
-                                            <img @click="handleLike(post, 'Login to like')"
-                                                :src="'/like.png'" alt="like">
+                                            <img @click="handleLike(post, 'Login to like')" :src="'/like.png'" alt="like">
                                             <span>{{ post.likes }} Likes</span>
                                         </div>
 
@@ -54,11 +53,7 @@
                                             <!-- Pass the message "Login to block" to the handleLike function (modify the message accordingly) -->
                                             <img @click="toggleBlock(post, 'Login to block')" src="/block.png" alt="follow">
                                         </div>
-                                        <div class="col">
-                                            <!-- Pass the message "Login to perform this action" to the toggleComments function (modify the message accordingly) -->
-                                            <img @click="toggleMessages(post, 'Login to send direct message')"
-                                                src="/outbox.png" alt="follow">
-                                        </div>
+
                                     </div>
 
                                     <hr>
@@ -146,22 +141,29 @@ export default {
 
         async handleLike(post) {
             try {
-                if (post.likes > 0) {
-                    // Unlike the post
-                    const success = await this.likePost(post.id);
-                    if (success) {
-                        this.toggleAlert('Post liked successfully.');
-                    } else {
-                        // Handle failure (optional)
-                        console.log("Failed to like the post.");
-                    }
-                } 
-               
+                // Check if the user is logged in
+                if (!this.$store.state.user) {
+                    // User is not logged in, show the provided message in an alert
+                    this.toggleAlert('Login to like');
+                    return;
+                }
+
+                // Like the post
+                const success = await this.likePost(post.id);
+
+                if (success) {
+                    // If the like operation was successful, increment the like count
+                    this.incrementLikes(post.id);
+                    this.toggleAlert('Post liked successfully.');
+                } else {
+                    // Handle failure (optional)
+                    console.log('Failed to like the post.');
+                }
             } catch (error) {
                 console.error('Error liking/unliking the post:', error);
             }
         },
- 
+
         async fetchPosts() {
             // Fetch all posts
             const apiUrl = 'https://jsonplaceholder.typicode.com/posts';
@@ -230,15 +232,7 @@ export default {
 
             post.showComments = !post.showComments;
         },
-        toggleMessages(post, message) {
-            if (!this.$store.state.user) {
-                // User is not logged in, show the provided message in an alert
-                alert(message);
-                return;
-            }
 
-            // post.showComments = !post.showComments;
-        },
 
         toggleBlock(post) {
             if (!this.$store.state.user) {
