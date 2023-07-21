@@ -55,7 +55,7 @@ example :
 
 username is : Bret and zipcode is : 92998-3874
 
-## Screen Shots
+
 
 
 
