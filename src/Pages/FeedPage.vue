@@ -139,6 +139,31 @@ export default {
             }, 3000); // Hide the alert after 3 seconds (if you still want to hide it)
         },
 
+        // async handleLike(post) {
+        //     try {
+        //         // Check if the user is logged in
+        //         if (!this.$store.state.user) {
+        //             // User is not logged in, show the provided message in an alert
+        //             this.toggleAlert('Login to like');
+        //             return;
+        //         }
+
+        //         // Like the post
+        //         const success = await this.likePost(post.id);
+
+        //         if (success) {
+        //             // If the like operation was successful, increment the like count
+        //             this.incrementLikes(post.id);
+        //             this.toggleAlert('Post liked successfully.');
+        //         } else {
+        //             // Handle failure (optional)
+        //             console.log('Failed to like the post.');
+        //         }
+        //     } catch (error) {
+        //         console.error('Error liking/unliking the post:', error);
+        //     }
+        // },
+
         async handleLike(post) {
             try {
                 // Check if the user is logged in
@@ -148,17 +173,11 @@ export default {
                     return;
                 }
 
-                // Like the post
-                const success = await this.likePost(post.id);
+                //fake a like operation
+                post.likes += 1;
 
-                if (success) {
-                    // If the like operation was successful, increment the like count
-                    this.incrementLikes(post.id);
-                    this.toggleAlert('Post liked successfully.');
-                } else {
-                    // Handle failure (optional)
-                    console.log('Failed to like the post.');
-                }
+                // Show the success message
+                // this.toggleAlert('Post liked successfully.');
             } catch (error) {
                 console.error('Error liking/unliking the post:', error);
             }
@@ -169,7 +188,10 @@ export default {
             const apiUrl = 'https://jsonplaceholder.typicode.com/posts';
             try {
                 const response = await axios.get(apiUrl);
-                this.posts = response.data;
+                this.posts = response.data.map((post) => ({
+                    ...post,
+                    likes: 0 // Initialize the likes property to 0 for each post
+                }));
 
                 // Initialize the showComments property for each post
                 for (const post of this.posts) {
@@ -184,6 +206,7 @@ export default {
                 // Now, assign the comments to each post
                 for (let i = 0; i < this.posts.length; i++) {
                     this.posts[i].comments = commentsList[i];
+
                 }
             } catch (error) {
                 console.error('Error fetching posts:', error);
