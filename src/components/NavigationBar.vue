@@ -95,6 +95,7 @@ export default {
         logout() {
             // Dispatch the logout action to reset user data to null
             this.$store.commit('setUser', null);
+            this.$router.push('/');
 
         },
         checkLoginStatus() {
